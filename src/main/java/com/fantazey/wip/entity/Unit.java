@@ -6,15 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -38,4 +35,11 @@ public class Unit {
     private OffsetDateTime dateDone;
     private String status;
     private int progress;
+
+    @ManyToMany(fetch=FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
+    @JoinTable(name = "unit_works",
+            joinColumns = @JoinColumn(name = "unit_id"),
+            inverseJoinColumns = @JoinColumn(name = "work_id"))
+    private List<Work> workRecords;
 }

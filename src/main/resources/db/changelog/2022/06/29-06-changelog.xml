@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/pro
+    http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.0.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd"
+>
+    <changeSet id="fix unit date columns names" author="Dyatlov Andrey">
+        <renameColumn tableName="unit" oldColumnName="dateAdd" newColumnName="date_add" columnDataType="DATETIME"/>
+        <renameColumn tableName="unit" oldColumnName="dateDone" newColumnName="date_done" columnDataType="DATETIME"/>
+    </changeSet>
+    <changeSet id="add Work table" author="Dyatlov Andrey">
+        <createTable tableName="work">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="work_pk"/>
+            </column>
+            <column name="title" type="VARCHAR(300)"/>
+            <column name="date" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="add unit_works table" author="Dyatlov Andrey">
+        <createTable tableName="unit_works">
+            <column name="unit_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="work_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="unit_works"
+                                 baseColumnNames="unit_id"
+                                 constraintName="fk_unit_works_unit_id"
+                                 referencedTableName="unit"
+                                 referencedColumnNames="id"
+                                 onUpdate="RESTRICT"
+                                 onDelete="RESTRICT"/>
+        <addForeignKeyConstraint baseTableName="unit_works"
+                                 baseColumnNames="work_id"
+                                 constraintName="fk_unit_works_work_id"
+                                 referencedTableName="work"
+                                 referencedColumnNames="id"
+                                 onUpdate="RESTRICT"
+                                 onDelete="RESTRICT"/>
+    </changeSet>
+</databaseChangeLog>

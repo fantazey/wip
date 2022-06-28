@@ -11,4 +11,5 @@
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd"
 >
     <include file="db/changelog/2022/06/28-06-changelog.xml"/>
+    <include file="db/changelog/2022/06/29-06-changelog.xml"/>
 </databaseChangeLog>

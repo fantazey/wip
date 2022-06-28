@@ -1,0 +1,11 @@
+services:
+  database:
+    image: mysql:oracle
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=1
+      - MYSQL_DATABASE=wip
+      - MYSQL_USER=wip
+      - MYSQL_PASSWORD=wip
+    container_name: wip

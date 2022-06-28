@@ -1,20 +1,14 @@
 package com.fantazey.wip.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
 
 @Setter
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Work {
@@ -22,8 +16,13 @@ public class Work {
     @GeneratedValue
     private long id;
 
+    private String title;
+
     private OffsetDateTime date;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "unit_works",
+            joinColumns = @JoinColumn(name = "work_id"),
+            inverseJoinColumns = @JoinColumn(name="unit_id"))
     private List<Unit> units;
 }
