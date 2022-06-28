@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/pro
+    http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.0.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd"
+>
+    <changeSet id="add Unit table" author="Dyatlov Andrey">
+        <createTable tableName="unit">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="unit_pk"/>
+            </column>
+            <column name="name" type="VARCHAR(300)"/>
+            <column name="dateAdd" type="DATETIME"/>
+            <column name="dateDone" type="DATETIME"/>
+            <column name="status" type="VARCHAR(300)"/>
+            <column name="progress" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="add Keywords table" author="Dyatlov Andrey">
+        <createTable tableName="unit_keywords">
+            <column name="unit_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="keywords" type="VARCHAR(300)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="add keywords constraint" author="Dyatlov Andrey">
+        <addForeignKeyConstraint baseTableName="unit_keywords"
+                                 baseColumnNames="unit_id"
+                                 constraintName="fk_unit_keyword_unit_id"
+                                 referencedTableName="unit"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="NO ACTION"
+        />
+    </changeSet>
+</databaseChangeLog>
